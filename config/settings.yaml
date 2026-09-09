@@ -1,0 +1,118 @@
+# ============================================================
+# AI-Powered Gesture-Controlled Automotive Infotainment System
+# Central Configuration File
+# ============================================================
+
+app:
+  name: "AI Cabin Experience"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"           # DEBUG | INFO | WARNING | ERROR | CRITICAL
+  log_to_file: true
+  log_dir: "logs"
+
+# ── Music Engine ─────────────────────────────────────────────
+music:
+  song_dir: "Song"
+  supported_formats:
+    - ".mp3"
+    - ".wav"
+    - ".ogg"
+    - ".flac"
+    - ".aac"
+  default_volume: 0.6         # 0.0 – 1.0
+  fade_duration_ms: 500
+  shuffle: true
+  repeat: false
+
+# ── Camera & Vision ──────────────────────────────────────────
+camera:
+  device_index: 0
+  width: 640
+  height: 480
+  fps: 30
+  flip_horizontal: true
+
+# ── Hand Tracking (MediaPipe) ────────────────────────────────
+hand_tracking:
+  max_num_hands: 1
+  min_detection_confidence: 0.45
+  min_tracking_confidence: 0.40
+  model_complexity: 1         # 0 = lite, 1 = full
+
+# ── Gesture Recognition ──────────────────────────────────────
+gesture:
+  confidence_threshold: 0.50
+  stabilization_frames: 45    # 1.5s hold @ 30fps before firing
+  cooldown_frames: 30         # 1s cooldown after firing
+  history_size: 10
+
+# ── Audio Analysis (Librosa) ─────────────────────────────────
+audio_analysis:
+  sample_rate: 22050
+  n_mfcc: 13
+  n_mels: 128
+  hop_length: 512
+  n_fft: 2048
+  analysis_window_sec: 15     # seconds of audio to analyse per pass
+  update_interval_sec: 5      # how often to re-analyse
+
+# ── Mood Classifier ──────────────────────────────────────────
+mood:
+  model_path: "data/models/mood_classifier.pkl"
+  scaler_path: "data/models/feature_scaler.pkl"
+  classes:
+    - "Calm"
+    - "Relaxed"
+    - "Happy"
+    - "Energetic"
+    - "Sad"
+    - "Focus"
+  default_mood: "Calm"
+
+# ── Cabin Ambience Engine ────────────────────────────────────
+cabin:
+  transition_steps: 60        # number of interpolation steps for color fade
+  transition_interval_ms: 16  # ~60 fps transition tick
+  default_intensity: 0.6
+  lighting_map:
+    Calm:      [30,  80,  180]   # soft blue
+    Relaxed:   [40,  160, 80]    # soft green
+    Happy:     [255, 200, 40]    # warm yellow
+    Energetic: [160, 30,  220]   # purple
+    Sad:       [20,  40,  120]   # dim blue
+    Focus:     [180, 220, 255]   # soft white-blue
+
+# ── Vehicle Simulator ────────────────────────────────────────
+vehicle:
+  update_interval_ms: 500
+  max_speed: 180
+  max_rpm: 8000
+  drive_modes:
+    - "ECO"
+    - "COMFORT"
+    - "SPORT"
+    - "SPORT+"
+  default_drive_mode: "COMFORT"
+
+# ── GUI ──────────────────────────────────────────────────────
+gui:
+  theme: "dark_automotive"
+  main_window:
+    width: 1400
+    height: 860
+    title: "AI Cabin Experience — Infotainment System"
+  car_window:
+    width: 900
+    height: 600
+    title: "Digital Car Interior"
+  font_family: "Segoe UI"
+  accent_color: "#7C3AED"     # violet
+  background_color: "#0A0A0F"
+  surface_color: "#12121A"
+  border_color: "#1E1E2E"
+  text_primary: "#E2E8F0"
+  text_secondary: "#64748B"
+  success_color: "#10B981"
+  warning_color: "#F59E0B"
+  error_color: "#EF4444"
